@@ -1,0 +1,153 @@
+html {
+    font-size: 13px;
+}
+a{
+    text-decoration: none;
+}
+.link-normal {
+    --bs-link-color-rgb: var(--bs-secondary-color);
+}
+.link-normal:hover {
+    /*text-decoration: underline;*/
+}
+
+.my-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 28rem;
+    height: 32rem;
+}
+.my-container > div{
+    padding: 0 .8rem;
+}
+
+.my-header {
+    flex:none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 3rem;
+}
+.logo {
+  width: 2rem;
+  height: 2rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url('../assets/logo/logo-light.svg');
+}
+/* dark */
+[data-bs-theme="dark"] .logo {
+  background-image: url('../assets/logo/logo-dark.svg');
+}
+
+.my-content {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.info-container {
+    min-height: 5rem;
+    text-align: center;
+}
+.info {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.supported-link {
+    font-size: 1rem;
+    text-decoration: underline;
+}
+.history-container {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 1rem;
+    overflow-y: auto;
+    color: var(--bs-secondary-color);
+}
+.history-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    overflow-y: auto;
+}
+.history-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem;
+    border-radius: 4px;
+}
+.history-item:hover {
+    background-color: var(--bs-secondary-bg);
+}
+.history-item-name {
+    flex: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.favs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+.fav-item-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.fav-item-name {
+    flex: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.calendar-table th:first-child {
+    width: 3rem;
+}
+.my-course {
+    border-width: 1px;
+}
+
+.settings-container {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 0.5rem;
+    overflow-y: auto;
+}
+.settings-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    overflow-y: auto;
+}
+
+
+.my-footer {
+    flex:none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.5rem;
+}

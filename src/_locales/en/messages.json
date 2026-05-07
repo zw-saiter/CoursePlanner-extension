@@ -1,0 +1,22 @@
+{
+    "appName": {
+        "message": "Course Planner"
+    },
+    "appDescription": {
+        "message": "Extract course data and generate schedule charts."
+    },
+
+    "confirmClearHistory": {
+        "message": "Are you sure you want to clear the history?",
+        "description": "confirmation message when clearing history"
+    },
+    "enterNewName": {
+        "message": "Enter new name:",
+        "description": "prompt message when renaming a history item"
+    },
+
+    "confirmRemoveFav": {
+        "message": "Are you sure you want to remove this favorite?",
+        "description": "confirmation message when removing a favorite"
+    }
+}

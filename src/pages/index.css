@@ -1,0 +1,41 @@
+a.navbar-brand[b-absj3bial4] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a[b-absj3bial4] {
+  color: #0077cc;
+}
+
+.btn-primary[b-absj3bial4] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-absj3bial4], .nav-pills .show > .nav-link[b-absj3bial4] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top[b-absj3bial4] {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom[b-absj3bial4] {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-absj3bial4] {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-absj3bial4] {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer[b-absj3bial4] {
+  width: 100%;
+}

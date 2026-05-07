@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CoursePlanner</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/logo/logo-light.svg" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="ref/site.css" />
+    <link rel="stylesheet" href="index.css" />
+    <script type="module" src="index.js" defer></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand navbar-light bg-white border-bottom box-shadow mb-3 sticky-top">
+		<div class="container my-navbar-container">
+			<div class="navbar-brand d-flex align-items-center fs-4">
+                <div class="my-logo"></div>
+				CoursePlanner
+			</div>
+            <div class="navbar-collapse d-sm-inline-flex justify-content-between bg-white">
+				<ul class="navbar-nav flex-grow-1 justify-content-end">
+                    <li class="nav-item">
+						<a class="nav-link" href="https://github.com/zw-saiter/courseplanner-extension"
+                         title="View on GitHub" target="_blank">
+                            <img src="/assets/img/GitHub_Invertocat_Black.svg">
+                        </a>
+					</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <main role="main">
+
+<div id="warnHistory" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+    <strong>Note:</strong> These information are extracted from the local cache, they might be outdated. Please visit the official website again to get the latest info if needed.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="courses-wrap mb-3">
+            <table id="table-sections" class="table table-sm table-bordered m-0 courses-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Sections</th>
+                        <th>Instructor</th>
+                        <th>Meeting Times</th>
+                        <th>Seats</th>
+                        <th style="width: 2rem;"><input id="chkAllSections" type="checkbox" class="form-check-input" title="Select All"" /></th>
+                        <th style="width: 2rem;"><button id="btnRemoveAllSections" type="button" class="btn-close" title="Remove All""></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="list-group-item-action">
+                        <td colspan="6">Please search for courses first.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button id="btnCombine" type="button" class="btn btn-primary w-100" id="btnCombine" disabled>Combine</button>
+    </div>
+</div>
+
+<hr />
+<div class="row mb-3">
+    <div id="resultTitle" class="col-auto me-auto fw-bold text-nowrap">Combinations: </div>
+    <div class="col-auto">
+        Sort: 
+        <label class="text-nowrap"><input id="rbtnLessCampusDays" class="form-check-input" type="radio" name="rbtnSort" value="LessCampusDays" checked /> FewerCampusDays</label> 
+        <label class="text-nowrap"><input id="rbtnLessClassDays" class="form-check-input" type="radio" name="rbtnSort" value="LessClassDays" /> FewerClassDays</label>
+    </div>
+</div>
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong>Note:</strong> Please note that the combinations provided here are for reference only. To complete your registration, please visit the official website.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="container px-0">
+    <div id="divPlans" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-lg-1">
+    </div>
+    <div id="divFootInfo" class="my-foot-info"></div>
+</div>
+<div style="display:none;">
+</div>
+
+
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-3">
+        <div class="container">
+			<div class="small text-center lh-lg py-3">
+			  <div b-absj3bial4>
+				&copy; 2026 - saiter.ca 
+			  </div>
+			</div>
+        </div>
+    </footer>
+</body>
+</html>
