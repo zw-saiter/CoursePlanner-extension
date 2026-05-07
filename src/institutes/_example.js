@@ -1,54 +1,117 @@
 // This is a example for extracting course data from an institute's course registration page.
 // Required: Use canonical institute codes as file names (e.g. sait.js, ubc.js)
+
+
+/**
+ * @typedef {Object} CourseSlot
+ * @property {number[]} days - Array of day indices (0:Sun, 1:Mon...6:Sat)
+ * @property {string} beginHM - HHmm format
+ * @property {string} endHM - HHmm format
+ * @property {string} rooms - Room name or 'ONLINE'
+ * @property {boolean} online - Is the slot online
+ * 
+ * @typedef {Object} CourseSection
+ * @property {number} id
+ * @property {string} courseName
+ * @property {string} courseAbbr
+ * @property {string} sectionName
+ * @property {Object} seats
+ * @property {number} seats.left
+ * @property {number} seats.capacity
+ * @property {string[]} instructors
+ * @property {CourseSlot[]} slots
+ */
+
 (() => {
-    function parseRow(tr, idx) {
-        const tds = tr.querySelectorAll(":scope > td");
-        if(tds.length < 4){ // filter out rows that are not course sections
+    /**
+     * Parses a single table row into a CourseSection object
+     * @param {HTMLTableRowElement} tr 
+     * @param {number} idx 
+     * @returns {CourseSection|null}
+     */
+    const parseRow = (tr, idx) => {
+        try {
+            const tds = tr.querySelectorAll(":scope > td");
+            // Filter out non-course rows (e.g., headers or empty rows)
+            if (tds.length < 4) return null;
+
+            // 1. Extract Course and Section names
+            const rawName = tds[0]?.textContent || "";
+            const nameParts = rawName.split('-').map(s => s.trim());
+            const courseName = nameParts[0] || "Unknown Course";
+            const sectionName = nameParts[1] || "Unknown Section";
+
+            // 2. Extract Seats information
+            const seatsContainer = tds[3].querySelector('.my-seats');
+            const seatsTitle = seatsContainer?.title || "";
+            const matchSeats = seatsTitle.match(/(\d+).+?(\d+)/);
+            const seats = {
+                left: parseInt(matchSeats?.[1] || "0"),
+                capacity: parseInt(matchSeats?.[2] || "0")
+            };
+
+            // 3. Extract Instructor(s)
+            const instructors = [tds[1]?.textContent?.trim() || "Staff"];
+
+            // 4. Extract Schedule Slots
+            const divSlots = tds[2].querySelectorAll('div.my-slot');
+            const slots = Array.from(divSlots, (divSlot) => {
+                // Parse days
+                const divDays = divSlot.querySelectorAll('div.my-slot-week > div');
+                const days = Array.from(divDays, (div, index) => 
+                    div.classList.length > 0 ? index : -1
+                ).filter(index => index !== -1);
+
+                // Parse time and room
+                const infoText = divSlot.querySelector('div.my-slot-info')?.textContent || "";
+                const infoParts = infoText.split(' ').filter(s => s.trim() !== "");
+                
+                const timePart = infoParts[0] || "0000-0000";
+                const roomPart = infoParts[1] || "TBA";
+                
+                const [beginHM, endHM] = timePart.split('-');
+                const isOnline = roomPart.toLowerCase().includes('online');
+
+                return {
+                    days,
+                    beginHM: beginHM || "0000",
+                    endHM: endHM || "0000",
+                    rooms: isOnline ? 'ONLINE' : roomPart,
+                    online: isOnline
+                };
+            });
+
+            // Return standardized object
+            return {
+                id: idx,
+                courseName,
+                courseAbbr: courseName, // Matching your original logic
+                sectionName,
+                seats,
+                instructors,
+                slots
+            };
+        } catch (error) {
+            console.error(`Row ${idx} parsing failed:`, error);
             return null;
         }
-        const courseName = tds[0].textContent.split('-')[0].trim();
-        const courseAbbr = courseName;
-        const sectionName = tds[0].textContent.split('-')[1].trim();
+    };
 
-        const instructors = [tds[1].textContent.trim()];
-
-        const seatsText = tds[3].querySelector('.my-seats').title.trim();
-        const mcSeats = seatsText.match(/(\d+).+?(\d+)/);
-        const seats = { left: parseInt(mcSeats?.[1] || 0), capacity: parseInt(mcSeats?.[2] || 0) };
-
-        const divSlots = tds[2].querySelectorAll('div.my-slot');
-        const slots = Array.from(divSlots, divSlot => {
-            const divDays = divSlot.querySelectorAll('div.my-slot-week > div')
-            const days = Array.from(divDays, (div, index) => div.classList.length > 0 ? index : -1).filter(index => index !== -1);
-            const time_room = divSlot.querySelector('div.my-slot-info').textContent.split(' ');
-            const b_e = time_room[0].split('-');
-            const rooms = time_room[1].trim();
-            const online = rooms.toLowerCase().includes('online');
-            const slot = {
-                days: days,         //array of day indices (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
-                beginHM: b_e[0],    //HHmm 24-hour format
-                endHM: b_e[1],      //HHmm 24-hour format
-                rooms: online ? 'ONLINE' : rooms,
-                online: online
-            };
-            return slot;
-        });
-
-        // Required: Do not change the schema of the following object
-        return {
-            id: idx,  // unique for each section
-            courseName,
-            courseAbbr,
-            sectionName,
-            seats,
-            instructors,
-            slots
+    /**
+     * Main entry point for the parser
+     */
+    const main = () => {
+        const TABLE_SELECTOR = "#table-sessions tbody tr";
+        const trs = document.querySelectorAll(TABLE_SELECTOR);
+        
+        if (!trs.length) {
+            console.warn("Parser: No course rows found.");
+            return [];
         }
-    }
 
-    //Parse course data from the course page
-    const trs = document.querySelectorAll("#table-sessions tbody tr");
-    const sections = Array.from(trs, parseRow).filter(section => section!=null); // filter out rows that are not course sections (e.g. header rows)
-    return sections;
+        return Array.from(trs, (tr, idx) => parseRow(tr, idx))
+                    .filter(section => section !== null);
+    };
 
+    return main();
 })();

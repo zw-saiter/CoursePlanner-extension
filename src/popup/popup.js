@@ -319,17 +319,30 @@ document.querySelector('.history-list').addEventListener('click', (e) => {
 
 
 // extract sections
-import {insts} from "../institutes/_all.js";
+import {insts,findInstByUrl} from "../institutes/_all.js";
 
-document.getElementById('aInstsFooter').textContent = insts.filter(inst => !inst.code.startsWith('_')).length; // exclude the example institute
-document.querySelector('.inst-list').append(...insts.filter(inst => !inst.code.startsWith('_')).map(inst => {
+document.getElementById('aInstsFooter').textContent = insts.length; // include the example institute
+document.querySelector('.inst-list').append(...insts.map(inst => {
     const li = document.createElement('li');
-    li.textContent = inst.name;
+
+    if(inst.homepage){
+        const a = document.createElement('a');
+        a.className = 'link-normal';
+        a.href = inst.homepage;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = inst.name;
+        li.appendChild(a);
+    }
+    else{
+        li.textContent = inst.name;
+    }
+
     return li;
 }));
 
 const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-const inst = insts.find(inst=>inst.pattern.test(tab.url))?.code;
+const inst = findInstByUrl(tab.url)?.code;
 
 let sections = [];
 if (!inst) {
