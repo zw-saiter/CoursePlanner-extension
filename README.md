@@ -28,13 +28,19 @@ Course Planner is a browser extension that helps students extract course informa
 
 Visit a supported course registration page that contains available courses and sections.
 
+![step-1](./screenshots/31.png)
+
 ### 2. Extract Courses
 
 Click the extension icon and extract detected course information from the page.
 
+![step-2](./screenshots/32.png)
+
 ### 3. Build Schedules
 
 Open Planner, select candidate courses, and generate conflict-free schedule combinations.
+
+![step-3](./screenshots/33.png)
 
 ---
 
