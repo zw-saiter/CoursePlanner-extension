@@ -1,6 +1,9 @@
 import * as util from "../assets/js/util.js";
 import * as site from "../pages/ref/site.js";
 
+const versionSpan = document.getElementById('spanVersion');
+versionSpan.textContent = chrome.runtime.getManifest().version;
+
 const settings = await util.storage.get('settings') || {};
 const history = await util.storage.get('history') || [];
 const temp = await util.storage.get('temp') || {};
@@ -367,8 +370,9 @@ else {
 
 document.getElementById('aOpenPlanner').addEventListener('click', async (e) => {
     // if these courses are already in the history, update it because info might have been changed
-    const courseAbbrs = sections.map(s => s.courseAbbr).sort().join(',');
-    const existingHist = history.find(h => h.sections.map(s => s.courseAbbr).sort().join(',') === courseAbbrs);
+    const courseAbbrs = [...new Set(sections.map(s => s.courseAbbr))].sort().join(',');
+    //const existingHist = history.find(h => h.sections.map(s => s.courseAbbr).sort().join(',') === courseAbbrs);
+    const existingHist = history.find(h => h.name === courseAbbrs); // compare by courseAbbrs only since sections might be different due to info update, and user might want to keep the old one as a separate history
     let id;
     if(existingHist){
         id = existingHist.id;

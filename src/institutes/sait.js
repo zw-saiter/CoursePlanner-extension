@@ -68,7 +68,7 @@
             const tdInstructors = tr.querySelector('td[data-property=instructor]');
             const instructors = tdInstructors 
                 ? Array.from(tdInstructors.querySelectorAll('a.email'), a => a.textContent.trim())
-                : ["Staff"];
+                : ["-"];
 
             // 4. Slots Parsing
             const divSlots = tr.querySelectorAll('td[data-property=meetingTime] div.meeting');
@@ -121,7 +121,9 @@
 
     const main = () => {
         const trs = document.querySelectorAll('#table1 tbody tr');
-        return Array.from(trs, parseRow).filter(s => s !== null);
+        const results = Array.from(trs, parseRow).filter(s => s !== null);
+		//console.log(results);
+		return results;
     };
 
     return main();
